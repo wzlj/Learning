@@ -44,3 +44,19 @@ _make_grads(outputs, grads) --> return tuple(new_grads)(outputs is loss, tensor(
         gate_gradients=(gate_gradients == Optimizer.GATE_OP),
         aggregation_method=aggregation_method,
         colocate_gradients_with_ops=colocate_gradients_with_ops)
+        
+        
+  classification tf slim
+  
+https://github.com/Robinatp/Tensorflow_Model_Slim_Classify
+  
+  clone source code
+  git clone https://github.com/Robinatp/Tensorflow_Model_Slim_Classify.git
+  
+  download data and training
+ 
+  cd Tensorflow_Model_Slim_Classify
+ ./scripts/train_cifarnet_on_cifar10.sh
+  
+  
+  
