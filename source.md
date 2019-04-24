@@ -46,7 +46,7 @@ _make_grads(outputs, grads) --> return tuple(new_grads)(outputs is loss, tensor(
         colocate_gradients_with_ops=colocate_gradients_with_ops)
         
         
-  classification tf slim
+*************************************classification tf slim*************************************
   
 https://github.com/Robinatp/Tensorflow_Model_Slim_Classify
   
@@ -57,6 +57,11 @@ https://github.com/Robinatp/Tensorflow_Model_Slim_Classify
  
   cd Tensorflow_Model_Slim_Classify
  ./scripts/train_cifarnet_on_cifar10.sh
+ 
+ 
+  https://github.com/PanJinquan/tensorflow_models_learning
+  训练修改 resnet_v1_train_val.py
   
-  
+  预测使用 predict.py
+  *************************************classification tf slim*************************************
   
