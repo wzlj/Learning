@@ -59,12 +59,7 @@ if __name__ == '__main__':
     class_nums = 5
     image_dir = 'test_image'
     labels_filename = 'dataset/label.txt'
-    # models_path = '/home/jlai/study/Tensorflow_Model_Slim_Classify/tmp/checkpoints/resnet_v1_50.ckpt'
-    # models_path = '/home/jlai/study/Tensorflow_Model_Slim_Classify/tmp/flowers-models/resnet_v1_50/model.ckpt-3001'
-    # models_path = '/home/jlai/study/Tensorflow_Model_Slim_Classify/tmp/resnet_v1_50-models/model.ckpt-10000'
-    # models_path = 'models/0423_1/best_models_37500_0.9158.ckpt'
-    models_path = '/home/jlai/study/tensorflow_models_learning/models/resnet_50/best_models_13400_0.9321.ckpt'
-    # models_path = '/home/jlai/study/tensorflow_models_learning/models/resnet_50_wu/model.ckpt-10'
+    models_path = 'models/resnet_50/best_models_13400_0.9321.ckpt'
 
     batch_size = 1  #
     resize_height = 224  # 指定存储图片高度
