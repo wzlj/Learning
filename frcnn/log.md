@@ -9,4 +9,4 @@ Traceback (most recent call last):
   File "__init__.pxd", line 918, in init utils.cython_bbox
 ValueError: numpy.ufunc size changed, may indicate binary incompatibility. Expected 216 from C header, got 192 from PyObject
 
-   please install the coco api.
+   $ please install the coco api.
