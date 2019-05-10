@@ -7,5 +7,4 @@ https://github.com/endernewton/tf-faster-rcnn
 
 tf-faster-rcnn/lib/layer_utils/proposal_layer.py
 
-  # Non-maximal suppression
-  keep = nms(np.hstack((proposals, scores)), nms_thresh)
+  keep = nms(np.hstack((proposals, scores)), nms_thresh)  # Non-maximal suppression
