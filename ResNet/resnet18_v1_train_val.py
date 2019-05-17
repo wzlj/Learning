@@ -131,12 +131,12 @@ def train(train_record_file,
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=sess, coord=coord)
         for i in range(max_steps + 1):
-            if i < 10000:
-                val_log_step = 500
-            else:
-                val_log_step = 10
+            # if i < 10000:
+            #     val_log_step = 500
+            # else:
+            #     val_log_step = 10
 
-            if i == 3000:
+            if i == 2000:
                 saver.save(sess, snapshot_prefix, global_step=i)
 
                 learning_rate = tf.train.exponential_decay(0.01, global_step, 1000, 0.95)
@@ -191,9 +191,9 @@ if __name__ == '__main__':
     val_record_file = 'dataset/record/val224.tfrecords'
 
     train_log_step = 1
-    base_lr = 0.0001  # 学习率
+    base_lr = 0.001  # 学习率
     # 重头开始训练的话，mobilenet收敛慢的一比，大概20000次迭代后，准确率开始蹭蹭的往上长,迭代十万次后准确率才70%
-    max_steps = 20000  # 迭代次数
+    max_steps = 5000  # 迭代次数
     train_param = [base_lr, max_steps]
 
     val_log_step = 1
