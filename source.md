@@ -65,3 +65,18 @@ https://github.com/Robinatp/Tensorflow_Model_Slim_Classify
   预测使用 predict.py
   *************************************classification tf slim*************************************
   
+  
+  ## CUDA_ERROR_NO_DEVICE
+  python main.py --phase train --dataset tiny --res_n 18 --lr 0.1
+Using TensorFlow backend.
+2019-05-17 15:49:11.762192: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2019-05-17 15:49:12.675867: E tensorflow/stream_executor/cuda/cuda_driver.cc:397] failed call to cuInit: CUDA_ERROR_NO_DEVICE
+2019-05-17 15:49:12.675949: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:158] retrieving CUDA diagnostic information for host: fpga07
+2019-05-17 15:49:12.675955: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:165] hostname: fpga07
+2019-05-17 15:49:12.676017: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:189] libcuda reported version is: 384.81.0
+2019-05-17 15:49:12.676047: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:193] kernel reported version is: 384.81.0
+2019-05-17 15:49:12.676052: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:300] kernel version seems to match DSO: 384.81.0
+
+because set the environments CUDA_VISIBLE_DEVICES=-1, this setting will disable the nvidia device.
+
+  
