@@ -79,4 +79,6 @@ Using TensorFlow backend.
 
 because set the environments CUDA_VISIBLE_DEVICES=-1, this setting will disable the nvidia device.
 
+https://github.com/rasbt/deeplearning-models
+
   
