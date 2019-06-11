@@ -97,6 +97,46 @@ net = vgg16()-----> net.create_architecture("TEST", 21, tag='default', anchor_sc
           cls_prob, bbox_pred = self._region_classification(fc7, is_training, 
                                                             initializer, initializer_bbox)
 
+### 3.3 build the anchors for the image  self._anchor_component()
+
+1.implement 
+
+          def _anchor_component(self):
+            with tf.variable_scope('ANCHOR_' + self._tag) as scope:
+              # just to get the shape right
+              height = tf.to_int32(tf.ceil(self._im_info[0] / np.float32(self._feat_stride[0])))
+              width = tf.to_int32(tf.ceil(self._im_info[1] / np.float32(self._feat_stride[0])))
+              if cfg.USE_E2E_TF:
+                anchors, anchor_length = generate_anchors_pre_tf(
+                  height,
+                  width,
+                  self._feat_stride,
+                  self._anchor_scales,
+                  self._anchor_ratios
+                )
+              else:
+                anchors, anchor_length = tf.py_func(generate_anchors_pre,
+                                                    [height, width,
+                                                     self._feat_stride, self._anchor_scales, self._anchor_ratios],
+                                                    [tf.float32, tf.int32], name="generate_anchors")
+              anchors.set_shape([None, 4])
+              anchor_length.set_shape([])
+              self._anchors = anchors
+              self._anchor_length = anchor_length
+              
+2. generate_anchors 
+
+              if cfg.USE_E2E_TF:
+                anchors, anchor_length = generate_anchors_pre_tf(
+                  height,
+                  width,
+                  self._feat_stride,
+                  self._anchor_scales,
+                  self._anchor_ratios
+                )
+                
+### 3.4 generate_anchors
+        
 ### 3.3 net.test_imag branch 
 
     cls_score, cls_prob, bbox_pred, rois = sess.run([self._predictions["cls_score"],
