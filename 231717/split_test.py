@@ -27,7 +27,7 @@ for img_file in files:
 	file_base = img_file[0:len(img_file)-4]
 
 	print("\n\n ----------------- ", file_base)
-	save_file_dir = os.path.join(save_path, file_base)
+	save_file_dir = os.path.join(save_path)
 	if not os.path.exists(save_file_dir):
 		os.mkdir(save_file_dir)
 
