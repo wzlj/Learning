@@ -55,6 +55,7 @@ for img_file in files:
 		print("row index = {}, count = {}".format(i, split_row_count))
 		for j in range(split_col_count):
 			_img = np.zeros((split_width, split_height, 3)).astype(np.int32)
+			print("_img shape ", _img.shape)
 			x1 = j * split_width
 			y1 = i * split_height
 			x2 = x1 + split_width
@@ -66,8 +67,9 @@ for img_file in files:
 
 			print("\n\n -------------  ", x1, x2, y1, y2)
 			# if (img[:, :, 3] == 255).sum() < split_height * split_width:
-			if True:
-				_img[x1:x2, y1:y2, :] = img[x1:x2, y1:y2, :3]
+			if (img[x1:x2, y1:y2, :3] == 0).sum() < split_height * split_width * 3 - 50 * 3:
+				print("\n\n", x2-x1,_img[x1:x2, y1:y2, :].shape)
+				_img[:x2-x1, :y2-y1, :] = img[x1:x2, y1:y2, :3]
 				# print("column index  = {}, count = {}, x offset = {}, yoffset = {}, width = {}, height = {}".format(j, split_col_count, xoffset, yoffset, width, height))
 				_img = Image.fromarray(np.uint8(_img))
 				_img.save('../data/test/data512/' + file_base + '_{}_{}.png'.format(i, j))
