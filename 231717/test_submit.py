@@ -9,16 +9,17 @@ np.set_printoptions(threshold=np.inf) #print not show ...
 Image.MAX_IMAGE_PIXELS = 100000000000
 
 use_cuda = True
-model = tc.load('./tmp/model200')
+model = tc.load('./tmp/model431')
 device = tc.device("cuda" if use_cuda else "cpu")
 model = model.to(device)
 model.eval()
 
 step = 512
 
+
 def test(model, src_path, dst_path):
 
-    for file in  os.listdir(src_path):
+    for file in os.listdir(src_path):
         file_path = os.path.join(src_path, file)
         img = Image.open(file_path)
         img = np.asanyarray(img)
@@ -54,10 +55,13 @@ def test(model, src_path, dst_path):
                     data[y1:y2, x1:x2] = r[:y2 - y1, :x2 - x1]
 
         imgx = Image.fromarray(data).convert('L')
-        imgx.save(dst_path + file.split('.')[0]+'_predict.png')
+        predict_path = os.path.join(dst_path, file.split('.')[0]+'_predict.png')
+        imgx.save(predict_path)
 
 
 if __name__ == "__main__":
     src_path = "../data/test/src"
-    dst_path = "../data/test/predict"
+    dst_path = "../data/test/predict/"
+    if not os.path.exists(dst_path):
+        os.mkdir(dst_path)
     test(model, src_path, dst_path)
