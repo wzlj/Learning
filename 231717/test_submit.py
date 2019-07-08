@@ -9,7 +9,7 @@ np.set_printoptions(threshold=np.inf) #print not show ...
 Image.MAX_IMAGE_PIXELS = 100000000000
 
 use_cuda = True
-model = tc.load('./tmp/model431')
+model = tc.load('../data/model_data1024_0.1/63')
 device = tc.device("cuda" if use_cuda else "cpu")
 model = model.to(device)
 model.eval()
@@ -60,8 +60,9 @@ def test(model, src_path, dst_path):
 
 
 if __name__ == "__main__":
+    import time
     src_path = "../data/test/src"
-    dst_path = "../data/test/predict/"
+    dst_path = "../data/test/predict_{}/".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     if not os.path.exists(dst_path):
         os.mkdir(dst_path)
     test(model, src_path, dst_path)
