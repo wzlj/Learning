@@ -11,7 +11,7 @@ from .layer import ConvBnRelu, ConvBn, ConvRelu
 from .scse import SCSEBlock
 # from data.coco import mask_to_class_segments
 
-xray_classnames = ('铁壳打火机', '黑钉打火机', '刀具', '电源和电池', '剪刀')
+xray_classnames = ('0', '1', '2', '3')
 
 def mask_to_class_segments(masks, n_class=5):
     for i in range(n_class):
@@ -111,7 +111,7 @@ class AdaptiveConcatPool2d(nn.Module):
 
 class UNetBase(nn.Module):
     def __init__(self, basenet='vgg11', num_filters=16, pretrained='imagenet', upscale_input=True,
-                 align_corners=False, Decoder=DecoderDeConv):
+                 align_corners=False, DecoderH=DecoderDeConv, DecoderL=DecoderSimpleNBN):
         super().__init__()
         self.align_corners = align_corners
         net, bn, n_pretrained = create_basenet(basenet, pretrained)
@@ -142,14 +142,14 @@ class UNetBase(nn.Module):
         self.encoder5.out_channels = context_channels
 
         self.pool = nn.MaxPool2d(2, 2)
-        self.center = Decoder(self.encoder5.out_channels, num_filters * 8 * 2, num_filters * 8)
+        self.center = DecoderH(self.encoder5.out_channels, num_filters * 8 * 2, num_filters * 8)
 
-        self.decoder5 = Decoder(self.encoder5.out_channels + num_filters * 8, num_filters * 8 * 2, num_filters * 8)
-        self.decoder4 = Decoder(self.encoder4.out_channels + num_filters * 8, num_filters * 8 * 2, num_filters * 4)
-        self.decoder3 = Decoder(self.encoder3.out_channels + num_filters * 4, num_filters * 4 * 2, num_filters * 2)
+        self.decoder5 = DecoderL(self.encoder5.out_channels + num_filters * 8, num_filters * 8 * 2, num_filters * 8)
+        self.decoder4 = DecoderL(self.encoder4.out_channels + num_filters * 8, num_filters * 8 * 2, num_filters * 4)
+        self.decoder3 = DecoderL(self.encoder3.out_channels + num_filters * 4, num_filters * 4 * 2, num_filters * 2)
 
         if basenet.startswith('vgg'):
-            self.decoder2 = Decoder(self.encoder2.out_channels + num_filters * 2, num_filters * 2 * 2, num_filters)
+            self.decoder2 = DecoderL(self.encoder2.out_channels + num_filters * 2, num_filters * 2 * 2, num_filters)
             self.decoder1 = nn.Sequential(
                 nn.Conv2d(self.encoder1.out_channels + num_filters, num_filters, kernel_size=3, padding=1),
                 nn.ReLU(inplace=True))
@@ -159,7 +159,7 @@ class UNetBase(nn.Module):
                 ActivatedBatchNorm(num_filters * 2 * 2),
                 nn.Conv2d(num_filters * 2 * 2, num_filters, kernel_size=3, padding=1),
                 ActivatedBatchNorm(num_filters))
-            self.decoder1 = Decoder(self.encoder1.out_channels + num_filters, num_filters * 2, num_filters)
+            self.decoder1 = DecoderL(self.encoder1.out_channels + num_filters, num_filters * 2, num_filters)
 
         self.decoder_channels = (1, 1, 2, 4, 8)
 
@@ -202,10 +202,10 @@ class UNetBase(nn.Module):
 
 class UNet(UNetBase):
     def __init__(self, classnames, basenet='vgg11', num_filters=16, pretrained='imagenet',
-                 upscale_input=True, align_corners=False, Decoder=DecoderDeConv,
+                 upscale_input=True, align_corners=False, DecoderH=DecoderDeConv, DecoderL=DecoderDeConv,
                  num_logit_features=None, logit_bias=True, logit_bn=True):
         super().__init__(basenet=basenet, num_filters=num_filters, pretrained=pretrained,
-                         upscale_input=upscale_input, align_corners=align_corners, Decoder=Decoder)
+                         upscale_input=upscale_input, align_corners=align_corners, DecoderH=DecoderH, DecoderL=DecoderL)
         self.num_filters = num_filters
         self.classnames = classnames
         self.logit_bias = logit_bias
@@ -247,7 +247,7 @@ class UNet(UNetBase):
         modules += [nn.Conv2d(self.num_logit_features, num_classes, kernel_size=1, bias=self.logit_bias),
                     #nn.Sigmoid()
                     ]
-        return  nn.Sequential(*modules)
+        return nn.Sequential(*modules)
 
     def _init(self):
         self.logit = self.create_logit_module(sum(self.decoder_channels))
@@ -489,6 +489,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     net = UNet(**vars(args))
+    # net = net.half().cuda()
     # net = create("unet2_e_simple", "resnet101", xray_classnames)  #
     print(net)
     parameters = [p for p in net.parameters() if p.requires_grad]
@@ -499,6 +500,7 @@ if __name__ == '__main__':
     print('N of encoder parameters {} ({} tensors)'.format(n_encoder_params, len(encoder_parameters)))
     print('N of decoder parameters {} ({} tensors)'.format(n_params - n_encoder_params, len(parameters) - len(encoder_parameters)))
 
+    # x = torch.empty((1, 3, 128, 128)).half().cuda()
     x = torch.empty((1, 3, 128, 128))
     y = net(x)
     print(x.size(), '-->', y.size())
