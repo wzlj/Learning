@@ -1,1 +1,7 @@
-train data of 1562391430831_submit.zip  is from 9587472 of split_train， the ratio of fg is bigger than 0.7， mIoU is 0.1993，input_size=512， bs=8
+##
+
+### results
+
+1562391430831_submit.zip  512， ratio = 0.7， mIoU is 0.1993，bs=8
+
+1562593751562_submit.zip  1024， ratio = 0.1， mIoU is 0.2970，bs=2, training epoch 72
