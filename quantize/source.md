@@ -8,6 +8,11 @@ https://blog.csdn.net/u011092156/article/details/80642133
 
 https://www.jianshu.com/p/19467624b4b0
 
+https://github.com/coffeedjimmy/remastered_tf_serving/blob/f3c0e59a15eff5f2617e371a1bed6f06dde719d9/tensorflow/tensorflow/contrib/lite/kernels/internal/reference/reference_ops.h
+
+https://github.com/google/gemmlowp/blob/664f14a7754e6c78e7b063433c4d3e52fd843c09/fixedpoint/fixedpoint.h
+
+
 '''
 
 inline int32 MultiplyByQuantizedMultiplierSmallerThanOne(
