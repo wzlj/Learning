@@ -1,5 +1,9 @@
 https://blog.csdn.net/c9Yv2cf9I06K2A9E/article/details/82634878
 
+pip install tensorflow-gpu==2.0.0b1  -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+
 in pytorch,
 loss.backward()------->
 torch.autograd.backward(self, gradient, retain_graph, create_graph)(location: python2.7/site-packages/torch/tensor.py  class Tensor.backward(self, gradient=None, retain_graph=None, create_graph=False))------->
