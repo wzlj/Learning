@@ -13,3 +13,13 @@ https://tensorflow.google.cn/api_docs/python/tf/saved_model/simple_save
 save_model 
 https://www.deeplearn.me/2493.html
 https://blog.csdn.net/mogoweb/article/details/83021524
+
+
+________________________________________________________________________________________
+
+RemoveError: 'setuptools' is a dependency of conda and cannot be removed from
+conda's operating environment.
+
+conda install -c anaconda setuptools
+
+________________________________________________________________________________________
