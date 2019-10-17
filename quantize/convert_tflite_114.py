@@ -18,7 +18,7 @@ _DEFAULT_IMAGE_BYTES = HEIGHT * WIDTH * NUM_CHANNELS
 # The record is the image plus a one-byte label
 _RECORD_BYTES = _DEFAULT_IMAGE_BYTES + 16
 NUM_CLASSES = 5
-data_dir = '/home/jlai/data/five_class/record/'
+data_dir = '_path/data/five_class/record/'
 
 # TODO(tobyboyd): Change to best practice 45K(train)/5K(val)/10K(test) splits.
 NUM_IMAGES = {
@@ -79,7 +79,7 @@ def _parse_record(example_proto, is_training, dtype):
 
 if __name__ == "__main__":
 
-    saved_model_dir = "/home/jlai/study/models/official/resnet/model/1571281017"  # "./savedmodel/1564619423"
+    saved_model_dir = "_path/study/models/official/resnet/model/1571281017"  # "./savedmodel/1564619423"
     converted_dir = './converted_model'
     if not os.path.exists(converted_dir):
         os.makedirs(converted_dir)
@@ -122,4 +122,4 @@ if __name__ == "__main__":
     print(input_details)
     print("+++")
     print(output_details)
-    open(converted_dir + '/' + "pint_resnet18.tflite", "wb").write(tflite_model)
+    open(converted_dir + '/' + "resnet18.tflite", "wb").write(tflite_model)
