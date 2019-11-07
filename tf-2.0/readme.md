@@ -25,6 +25,6 @@ conda install -c anaconda setuptools
 ________________________________________________________________________________________
 
 tools for analyze the savedmodel 
-
+just run the 'saved_model_cli' command
 saved_model_cli show --dir model/1573126315/ --tag_set serve --signature_def serving_default
 saved_model_cli show --dir model/1573126315/ --all
