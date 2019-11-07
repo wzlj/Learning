@@ -23,3 +23,8 @@ conda's operating environment.
 conda install -c anaconda setuptools
 
 ________________________________________________________________________________________
+
+tools for analyze the savedmodel 
+
+saved_model_cli show --dir model/1573126315/ --tag_set serve --signature_def serving_default
+saved_model_cli show --dir model/1573126315/ --all
